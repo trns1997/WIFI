@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         HashMap<String, Integer> rp5 = new HashMap<>() ;
 //        HashMap<String, Integer> rp6 = new HashMap<>() ;
 //        HashMap<String, Integer> rp7 = new HashMap<>() ;
+
         List<HashMap> refPoint = new ArrayList<>();
         List<Double> euciledian = new ArrayList<>();
 
@@ -75,7 +76,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        refPoint.add(rp4);
 //        refPoint.add(rp6);
 //        refPoint.add(rp7);
-//        Log.i("check", String.valueOf(refPoint));
 
 
         switch(view.getId()){
