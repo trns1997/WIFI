@@ -19,8 +19,31 @@ import java.util.HashMap;
 import java.util.List;
 
 import static com.example.dank_engine.wifi.R.layout.activity_main;
+import static java.lang.Double.NaN;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    HashMap<String, Integer> wifi_info = new HashMap<>();
+    HashMap<String, Integer> rp0 = new HashMap<>();
+    HashMap<String, Integer> rp1 = new HashMap<>();
+    HashMap<String, Integer> rp2 = new HashMap<>();
+    HashMap<String, Integer> rp3 = new HashMap<>();
+    HashMap<String, Integer> rp4 = new HashMap<>();
+
+    List<String> rp0_bssids = Arrays.asList("f4:0f:1b:97:fd:30", "f4:0f:1b:93:8b:70", "f4:0f:1b:93:88:c0", "f4:0f:1b:ab:12:c0", "f4:0f:1b:93:a4:30", "f4:0f:1b:97:e1:00", "f4:0f:1b:97:e1:30");
+    List<Integer> rp0_rssi = Arrays.asList(-64, -51, -65, -64, -65, -48, -53);
+
+    List<String> rp1_bssids = Arrays.asList("f4:0f:1b:97:fd:30", "f4:0f:1b:ab:12:c0", "f4:0f:1b:93:a4:30", "f4:0f:1b:97:e1:30", "f4:0f:1b:93:88:c0", "f4:0f:1b:97:e1:00", "f4:0f:1b:97:f9:70");
+    List<Integer> rp1_rssi = Arrays.asList(-59, -59, -58, -47, -58, -50, -63);
+
+    List<String> rp2_bssids = Arrays.asList("f4:0f:1b:97:e1:30", "f4:0f:1b:93:88:c0", "f4:0f:1b:97:f9:70", "f4:0f:1b:93:a4:30", "f4:0f:1b:97:e1:00", "7c:0e:ce:0e:98:00", "f4:0f:1b:97:f9:e0", "f4:0f:1b:93:8b:70", "f4:0f:1b:ab:12:c0");
+    List<Integer> rp2_rssi = Arrays.asList(-35, -54, -59, -63, -59, -65, -62, -62, -51);
+
+    List<String> rp3_bssids = Arrays.asList("f4:0f:1b:97:fd:30", "f4:0f:1b:ab:12:c0", "f4:0f:1b:93:88:c0", "f4:0f:1b:97:e1:00", "00:23:eb:3a:14:f0", "f4:0f:1b:93:8b:70", "f4:0f:1b:97:e1:30");
+    List<Integer> rp3_rssi = Arrays.asList(-54, -55, -64, -44, -57, -61, -49);
+
+    List<String> rp4_bssids = Arrays.asList("f4:0f:1b:ab:12:c0", "f4:0f:1b:97:e1:00", "f4:0f:1b:97:f9:70", "f4:0f:1b:93:88:c0", "f4:0f:1b:97:e1:30");
+    List<Integer> rp4_rssi = Arrays.asList(-46, -64, -65, -58, -39);
 
 
     @Override
@@ -43,44 +66,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         assert wifiManager != null;
 
-        HashMap<String, Integer> wifi_info = new HashMap<>();
-        HashMap<String, Integer> rp0 = new HashMap<>();
-        HashMap<String, Integer> rp1 = new HashMap<>();
-        HashMap<String, Integer> rp2 = new HashMap<>();
-        HashMap<String, Integer> rp3 = new HashMap<>();
-        HashMap<String, Integer> rp4 = new HashMap<>();
-        HashMap<String, Integer> rp5 = new HashMap<>();
-//        HashMap<String, Integer> rp6 = new HashMap<>() ;
-//        HashMap<String, Integer> rp7 = new HashMap<>() ;
-
         List<HashMap> refPoint = new ArrayList<>();
         List<Double> euciledian = new ArrayList<>();
-
-        List<String> rp0_bssids = Arrays.asList("18:64:72:22:6c:e1", "18:64:72:22:24:c1", "18:64:72:22:b6:81", "18:64:72:22:6b:61", "18:64:72:22:4f:c1", "18:64:72:22:68:81");
-        List<Integer> rp0_rssi = Arrays.asList(-50, -60, -60, -42, -57, -60);
-
-        List<String> rp1_bssids = Arrays.asList("18:64:72:22:6c:e1", "18:64:72:22:24:c1", "18:64:72:22:6b:61", "18:64:72:22:b6:81", "18:64:72:22:68:81", "18:64:72:22:4f:c1", "18:64:72:22:9c:c1");
-        List<Integer> rp1_rssi = Arrays.asList(-49, -56, -49, -58, -57, -64, -65);
-
-        List<String> rp2_bssids = Arrays.asList("18:64:72:22:6c:e1", "18:64:72:22:24:c1", "18:64:72:22:c1:21", "18:64:72:22:68:81", "18:64:72:22:9c:c1", "18:64:72:22:b6:81", "18:64:72:22:c2:41", "18:64:72:22:6b:61", "18:64:72:22:6b:81");
-        List<Integer> rp2_rssi = Arrays.asList(-53, -60, -60, -50, -65, -55, -61, -47, -63);
-
-        List<String> rp3_bssids = Arrays.asList("18:64:72:22:6c:e1", "18:64:72:22:24:c1", "18:64:72:22:c1:21", "18:64:72:22:68:81", "18:64:72:22:c2:41", "18:64:72:22:aa:01", "18:64:72:22:b6:81");
-        List<Integer> rp3_rssi = Arrays.asList(-56, -60, -56, -50, -62, -65, -53);
 
         rp0 = make_rp(rp0_bssids, rp0_rssi);
         rp1 = make_rp(rp1_bssids, rp1_rssi);
         rp2 = make_rp(rp2_bssids, rp2_rssi);
         rp3 = make_rp(rp3_bssids, rp3_rssi);
+        rp4 = make_rp(rp4_bssids, rp4_rssi);
 
         refPoint.add(rp0);
         refPoint.add(rp1);
         refPoint.add(rp2);
         refPoint.add(rp3);
-//        refPoint.add(rp4);
-//        refPoint.add(rp6);
-//        refPoint.add(rp7);
-
+        refPoint.add(rp4);
 
         switch (view.getId()) {
             case R.id.locate:
@@ -89,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 List<ScanResult> scanRef = wifiManager.getScanResults();
 
                 for (ScanResult result : scanRef) {
-                    if (result.level < -80 || !result.SSID.equals("eduroam")) {
+                    if (!result.SSID.equals("eduroam")) {
                     } else {
                         wifi_info.put(result.BSSID, result.level);
                     }
@@ -178,34 +177,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
                 assert wifiManager != null;
 
-                HashMap<String, Integer> wifi_info = new HashMap<>();
-                HashMap<String, Integer> rp0 = new HashMap<>();
-                HashMap<String, Integer> rp1 = new HashMap<>();
-                HashMap<String, Integer> rp2 = new HashMap<>();
-                HashMap<String, Integer> rp3 = new HashMap<>();
-                HashMap<String, Integer> rp4 = new HashMap<>();
-//                HashMap<String, Integer> rp5 = new HashMap<>();
-//        HashMap<String, Integer> rp6 = new HashMap<>() ;
-//        HashMap<String, Integer> rp7 = new HashMap<>() ;
-
                 List<HashMap> refPoint = new ArrayList<>();
                 List<Double> euciledianAvg;
-
-
-                List<String> rp0_bssids = Arrays.asList("f4:0f:1b:97:dd:50", "f4:0f:1b:97:fd:30", "d8:b1:90:fd:23:f0", "f4:0f:1b:93:90:b0", "d8:b1:90:f3:39:50");
-                List<Integer> rp0_rssi = Arrays.asList(-47, -60, -63, -64, -63);
-
-                List<String> rp1_bssids = Arrays.asList("f4:0f:1b:97:dd:50", "f4:0f:1b:97:fd:30", "d8:b1:90:fd:23:f0");
-                List<Integer> rp1_rssi = Arrays.asList(-37, -58, -63);
-
-                List<String> rp2_bssids = Arrays.asList("f4:0f:1b:97:dd:50", "f4:0f:1b:97:fd:30", "f4:0f:1b:97:e1:00", "f4:0f:1b:93:92:90", "d8:b1:90:fd:23:f0", "d8:b1:90:fd:27:80");
-                List<Integer> rp2_rssi = Arrays.asList(-60, -59, -62, -54, -60, -56);
-
-                List<String> rp3_bssids = Arrays.asList("f4:0f:1b:97:fd:30", "f4:0f:1b:93:92:90", "d8:b1:90:fd:23:f0");
-                List<Integer> rp3_rssi = Arrays.asList(-62, -60, -47);
-
-                List<String> rp4_bssids = Arrays.asList("f4:0f:1b:97:dd:50", "f4:0f:1b:97:e1:00", "d8:b1:90:f3:39:50", "f4:0f:1b:93:8c:90", "f4:0f:1b:97:fd:30");
-                List<Integer> rp4_rssi = Arrays.asList(-45, -64, -63, -65, -47);
 
                 rp0 = make_rp(rp0_bssids, rp0_rssi);
                 rp1 = make_rp(rp1_bssids, rp1_rssi);
@@ -218,15 +191,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 refPoint.add(rp2);
                 refPoint.add(rp3);
                 refPoint.add(rp4);
-//        refPoint.add(rp6);
-//        refPoint.add(rp7);
 
                 TextView location = findViewById(R.id.location);
                 wifiManager.startScan();
                 List<ScanResult> scanRef = wifiManager.getScanResults();
 
                 for (ScanResult result : scanRef) {
-                    if (result.level < -80 || !result.SSID.equals("eduroam")) {
+                    if (!result.SSID.equals("eduroam")) {
                     } else {
                         wifi_info.put(result.BSSID, result.level);
                     }
@@ -238,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
 //                Log.i("loc", String.valueOf(euciledian));
 
-                if (euciledian.size() >= (refPoint.size())*40) {
+                if (euciledian.size() >= (refPoint.size())*10) {
                     euciledianAvg = rolling(refPoint, euciledian);
 
                     Log.i("loc", String.valueOf(euciledianAvg));
@@ -246,7 +217,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Double min = euciledianAvg.get(0);
                     int index = 0;
                     for (int i = 0; i < euciledianAvg.size(); i++) {
-                        if (min > euciledianAvg.get(i) && euciledianAvg.get(i) != 0) {
+                        if (min > euciledianAvg.get(i) && euciledianAvg.get(i) != NaN) {
                             min = euciledianAvg.get(i);
                             index = i;
                         }
@@ -255,7 +226,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Log.i("loc", String.valueOf(index));
                     euciledian.clear();
                 }
-                handler.postDelayed(this, 20);
+                handler.postDelayed(this, 100);
             }
         };
 
